@@ -536,19 +536,28 @@ button, input, select { font: inherit; color: inherit; }
 .certs li { position: relative; padding-left: 22px; font-weight: 600; font-size: 1.0625rem; }
 .certs li::before { content: ""; position: absolute; left: 0; top: .55em; width: 9px; height: 9px; border-radius: 2px; background: var(--tangerine); }
 .sub-h { font-size: clamp(1.4rem, 2.6vw, 1.9rem); font-weight: 700; margin: clamp(44px, 6vw, 64px) 0 20px; }
-.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.projects { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
 .project {
   position: relative; display: flex; flex-direction: column; gap: 12px;
   padding: 26px 24px 24px; background: var(--white); border: 1px solid var(--line);
   border-radius: var(--r-md); box-shadow: var(--shadow-sm); overflow: hidden;
 }
 .project::before { content: ""; position: absolute; inset: 0 0 auto 0; height: 5px; background: var(--dc); }
-.project h4 { margin: 0; font: 700 1.1875rem/1.2 var(--f-display); letter-spacing: -0.02em; }
-.project p { color: var(--ink-2); }
+.project h4 { margin: 0; font: 700 1.0625rem/1.25 var(--f-display); letter-spacing: -0.02em; }
+.project p { color: var(--ink-2); font-size: .975rem; }
 .project .role__tools { grid-column: auto; margin-top: auto; padding-top: 6px; }
-.project .role__tools li { background: var(--paper); font-size: .875rem; }
+.project .role__tools li { background: var(--paper); font-size: .8125rem; padding: 3px 10px; }
+.project__link {
+  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+  padding-top: 12px; font-weight: 600; font-size: .9375rem; color: var(--cobalt);
+  text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px;
+}
+.project__link:hover { text-decoration-thickness: 2px; }
+.project__link svg { font-size: 1.05rem; }
+.project { scroll-margin-top: 90px; }
 .role__tools { list-style: none; }
-@media (max-width: 960px) { .projects { grid-template-columns: 1fr; } }
+@media (max-width: 1100px) { .projects { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px)  { .projects { grid-template-columns: 1fr; } }
 
 </style>
   <script type="application/ld+json">
@@ -600,13 +609,13 @@ button, input, select { font: inherit; color: inherit; }
   <kbd class="jump__kbd">Ctrl K</kbd>
 </button>
 
-<dialog class="palette" id="palette" aria-label="Jump to a section, role, or skill">
+<dialog class="palette" id="palette" aria-label="Jump to a section, role, project, or skill">
   <div class="palette__box">
     <div class="palette__head">
       <svg aria-hidden="true"><use href="#i-search"/></svg>
-      <label class="sr-only" for="paletteInput">Search sections, roles, and skills</label>
+      <label class="sr-only" for="paletteInput">Search sections, roles, projects, and skills</label>
       <input id="paletteInput" type="text" autocomplete="off" spellcheck="false"
-             placeholder="Search sections, roles, or skills" role="combobox"
+             placeholder="Search sections, roles, projects, or skills" role="combobox"
              aria-expanded="true" aria-controls="paletteList" aria-autocomplete="list">
       <button class="palette__close" type="button" id="paletteClose" aria-label="Close">
         <svg aria-hidden="true"><use href="#i-close"/></svg>
@@ -927,17 +936,47 @@ button, input, select { font: inherit; color: inherit; }
 
     <h3 class="sub-h">Projects</h3>
     <div class="projects">
-      <article class="project" style="--dc:var(--cobalt)">
+      <article class="project" id="proj-ecommerce" style="--dc:var(--cobalt)">
+        <h4>E-Commerce Data Pipeline (Medallion Lakehouse)</h4>
+        <p>Built a Bronze → Silver → Gold PySpark pipeline over 100K+ Olist orders, with StructType schema enforcement, null-rate and row-count quality gates, 16 pytest tests, and 7 Gold KPI domains including RFM segmentation.</p>
+        <ul class="role__tools"><li>PySpark</li><li>Databricks</li><li>pytest</li><li>Data quality</li></ul>
+        <a class="project__link" href="https://github.com/ds2204/simple-ETL" target="_blank" rel="noopener" aria-label="View the E-Commerce Data Pipeline on GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg>View on GitHub</a>
+      </article>
+      <article class="project" id="proj-marketing" style="--dc:var(--emerald)">
+        <h4>Marketing Campaign Performance Dashboard</h4>
+        <p>Cleaned 120 campaign records to 104 in Python (deduplication, IQR outliers), then built an interactive dashboard with 13 KPI cards, 11 Chart.js visuals, and filters for ROI, CAC, CTR, and funnel drop-off across 6 ad platforms.</p>
+        <ul class="role__tools"><li>Python</li><li>JavaScript</li><li>Chart.js</li><li>KPI reporting</li></ul>
+        <a class="project__link" href="https://github.com/ds2204/marketing-campaign-performance-dashboard" target="_blank" rel="noopener" aria-label="View the Marketing Campaign Performance Dashboard on GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg>View on GitHub</a>
+      </article>
+      <article class="project" id="proj-stock" style="--dc:var(--magenta)">
+        <h4>Stock Market Analytics &amp; Automated Reporting</h4>
+        <p>Pulls daily prices from the Alpha Vantage API, calculates RSI and volume bounds, and renders Matplotlib charts into HTML reports emailed through Amazon SES, with recipients in DynamoDB and AWS mocked in unit tests.</p>
+        <ul class="role__tools"><li>Python</li><li>AWS SES</li><li>DynamoDB</li><li>Docker</li></ul>
+        <a class="project__link" href="https://github.com/ds2204/stock-market-analysis" target="_blank" rel="noopener" aria-label="View Stock Market Analytics and Automated Reporting on GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg>View on GitHub</a>
+      </article>
+      <article class="project" id="proj-iot" style="--dc:var(--sun)">
+        <h4>AWS IoT Heart-Rate Streaming Prototype</h4>
+        <p>Generates synthetic heart-rate events for Amazon Kinesis, computes 60-second per-device averages and threshold flags in streaming SQL, and lays out a serverless data lake design with S3, Glue to Parquet, Athena, and QuickSight.</p>
+        <ul class="role__tools"><li>Kinesis</li><li>SQL</li><li>Bash</li><li>AWS Glue</li></ul>
+        <a class="project__link" href="https://github.com/ds2204/aws-iot-heartrate-streaming" target="_blank" rel="noopener" aria-label="View the AWS IoT Heart-Rate Streaming Prototype on GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg>View on GitHub</a>
+      </article>
+      <article class="project" id="proj-eda" style="--dc:var(--tangerine)">
+        <h4>Exploratory Data Analysis Portfolio</h4>
+        <p>Three Jupyter studies: 353K Boston crime records (2015–2018), 6,435 Walmart store-weeks, and Netflix daily returns and volume, backed by an offline script that runs all 100 notebook cells to check they reproduce.</p>
+        <ul class="role__tools"><li>Pandas</li><li>Matplotlib</li><li>Jupyter</li><li>Time series</li></ul>
+        <a class="project__link" href="https://github.com/ds2204/Boston-crime-exploratory-analysis" target="_blank" rel="noopener" aria-label="View the Exploratory Data Analysis Portfolio on GitHub"><svg aria-hidden="true"><use href="#i-github"/></svg>View on GitHub</a>
+      </article>
+      <article class="project" id="proj-ai" style="--dc:var(--cobalt)">
         <h4>AI Workflow &amp; Business Process Automation</h4>
         <p>Engineered 6 AI-powered workflows with n8n, OpenAI, and vector search, applying prompt engineering to automate business processes.</p>
         <ul class="role__tools"><li>n8n</li><li>Docker</li><li>OpenAI</li><li>Groq</li></ul>
       </article>
-      <article class="project" style="--dc:var(--emerald)">
+      <article class="project" id="proj-finance" style="--dc:var(--emerald)">
         <h4>Financial Analysis &amp; Investment Strategy Simulation</h4>
         <p>Ran scenario analysis and forecasting across 12 business cases in Excel to weigh cost optimization, supplier tradeoffs, and investment outcomes.</p>
         <ul class="role__tools"><li>Excel</li><li>Financial modeling</li><li>Forecasting</li></ul>
       </article>
-      <article class="project" style="--dc:var(--magenta)">
+      <article class="project" id="proj-leadership" style="--dc:var(--magenta)">
         <h4>Leadership</h4>
         <p>Presented analytics workflow optimization strategies to the Women in Data community and competed in a Tableau Hackathon on dashboard usability and data storytelling.</p>
         <ul class="role__tools"><li>Women in Data</li><li>Tableau Hackathon</li></ul>
@@ -1043,6 +1082,10 @@ button, input, select { font: inherit; color: inherit; }
       const c = getComputedStyle(r).getPropertyValue("--ac");
       items.push({ group: "Roles", label: $(".role__title", r).textContent, hint: $(".role__org", r).textContent, target: "#" + r.id, color: c });
     });
+    $$(".project").forEach(p => {
+      const tools = $$(".role__tools li", p).map(li => li.textContent).join(", ");
+      items.push({ group: "Projects", label: $("h4", p).textContent, hint: tools, target: "#" + p.id, color: getComputedStyle(p).getPropertyValue("--dc") });
+    });
     $$(".tiles .chips li, .tiles .spec__name, .tiles .pills li").forEach((el, i) => {
       el.id = el.id || "skill-" + i;
       const label = el.firstChild.textContent.trim();
@@ -1059,7 +1102,7 @@ button, input, select { font: inherit; color: inherit; }
     active = Math.min(active, Math.max(0, results.length - 1));
     pList.innerHTML = "";
     if (!results.length) {
-      pList.innerHTML = `<li class="palette__empty">No section, role, or skill matches “${escapeHtml(pInput.value)}”. Try a tool name like Snowflake or Power BI.</li>`;
+      pList.innerHTML = `<li class="palette__empty">No section, role, project, or skill matches “${escapeHtml(pInput.value)}”. Try a tool name like Snowflake or Power BI.</li>`;
       pInput.removeAttribute("aria-activedescendant");
       return;
     }
